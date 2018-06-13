@@ -24,5 +24,33 @@ divisors.
 What is the value of the first triangle number to have over five hundred
 divisors?
 """
+import math
 
 
+def triangle_number(n):
+    return n * (n + 1) // 2
+
+def generate_triangle_numbers():
+    n = 1
+    while True:
+        yield triangle_number(n)
+        n += 1
+
+def find_divisors(n):
+    for i in range(1, math.ceil(math.sqrt(n))):
+        if n % i == 0:
+            divisor1, divisor2 = i, n // i
+            if divisor1 == divisor2:
+                yield divisor1
+            else:
+                yield divisor1
+                yield divisor2
+
+def euler():
+    for triangle_number in generate_triangle_numbers():
+        for i, _ in enumerate(find_divisors(triangle_number), 1):
+            if i >= 500:
+                return triangle_number
+
+print(euler())
+    
